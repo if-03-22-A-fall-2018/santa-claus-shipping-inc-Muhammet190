@@ -1,11 +1,20 @@
 #include <stdlib.h>
 #include "list.h"
 
+struct Node
+{
+  struct Node* Next;
+  void *data;
+};
 
+struct List
+{
+  struct Node* head;
+}
 
 List* list_create()
 {
-
+  return (List *)malloc(sizeof(struct Node));
 }
 
 /**
@@ -23,6 +32,18 @@ void list_delete(List *list)
  */
 void list_add(List *list, void *data)
 {
+  struct Node * newNode = (Node *)malloc(sizeof(struct Node));
+  newNode->data = data;
+
+  if (list->head == 0)
+  {
+    list->head = newNode;
+  }
+  else
+  {
+    newNode->Next = list->head;
+    list->head = newNode;
+  }
 
 }
 
@@ -31,7 +52,11 @@ void list_add(List *list, void *data)
  */
 void list_insert_after(Node *node, void *data)
 {
+  Node* newNode = (Node*)malloc(sizeof(struct Node));
+  newNode->data = data;
 
+  newNode->Next = node->Next;
+  node->Next = newNode;
 }
 
 /**
@@ -39,7 +64,7 @@ void list_insert_after(Node *node, void *data)
  */
 Node* list_get_first(List *list)
 {
-
+  return list->head;
 }
 
 /**
@@ -48,7 +73,7 @@ Node* list_get_first(List *list)
  */
 Node* list_get_next(Node *node)
 {
-
+  return node->Next;
 }
 
 /**
